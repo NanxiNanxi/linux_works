@@ -1,0 +1,36 @@
+#!/bin/bash
+randomNumber=$(( 100+(`od -An -N2 -i /dev/random` )%(1000-100+1) )) 
+userNumber=0
+count=0
+result=3
+checkGuess () {
+	if [ "$randomNumber" -gt "$userNumber" ] ; then 
+	echo "1" 
+	elif [ "$randomNumber" -lt "$userNumber" ] ; then 
+	echo "2"  
+	elif [ "$randomNumber" -eq "$userNumber" ] ; then 
+	echo "0" 
+	fi 
+	}
+echo "Let's play a number guessing game!"
+while [ "$result" -ne 0 ];
+	do
+	read -p "Please enter a number:" userNumber
+	result=$(checkGuess)
+	if [ "$result" -eq 1 ] ; then 
+	echo "Too low" 
+	elif [ "$result" -eq 2 ] ; then 
+	echo "Too high" 
+	fi
+	let count+=1
+	if [ "$count" -eq 10 ] ; then
+	result=0
+	fi
+	done
+if [ "$count" -eq 10 ] ; then
+echo "You have reached 10 times, You lose!"
+elif [ "$count" -ne 10 ] ; then 
+echo "you win!"
+fi
+	
+
