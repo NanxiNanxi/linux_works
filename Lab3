@@ -1,0 +1,204 @@
+1-a A Guided Tour
+
+nanxi@nanxi-OptiPlex-990:~$ ls -l
+total 48
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Desktop
+drwxr-xr-x 3 nanxi nanxi 4096 Nov 18 14:40  Documents
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 13:39  Downloads
+-rw-r--r-- 1 nanxi nanxi 8980 Nov  6 10:27  examples.desktop
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Music
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Pictures
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Public
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Templates
+drwxr-xr-x 2 nanxi nanxi 4096 Nov  7 03:52  Videos
+drwxrwxr-x 3 nanxi nanxi 4096 Nov  7 10:14 'VirtualBox VMs'
+nanxi@nanxi-OptiPlex-990:~$ file examples.desktop 
+examples.desktop: UTF-8 Unicode text
+nanxi@nanxi-OptiPlex-990:~$ less examples.desktop 
+
+
+2-a
+nanxi@nanxi-OptiPlex-990:~$ mkdir playground
+nanxi@nanxi-OptiPlex-990:~$ cd playground/
+nanxi@nanxi-OptiPlex-990:~/playground$ mkdir dir1 dir2
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 8
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir2
+nanxi@nanxi-OptiPlex-990:~/playground$ cp /etc/passwd .
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 12
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir2
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:01 passwd
+nanxi@nanxi-OptiPlex-990:~/playground$ cp -v /etc/passwd .
+'/etc/passwd' -> './passwd'
+nanxi@nanxi-OptiPlex-990:~/playground$ cp -i /etc/passwd .
+cp: overwrite './passwd'? y
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 12
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir2
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:09 passwd
+nanxi@nanxi-OptiPlex-990:~/playground$ mv passwd fun
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 12
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 18 15:00 dir2
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:09 fun
+nanxi@nanxi-OptiPlex-990:~/playground$ mv fun dir1
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l dir1
+total 4
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:09 fun
+nanxi@nanxi-OptiPlex-990:~/playground$ mv dir1/fun dir2
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l dir2
+total 4
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:09 fun
+
+nanxi@nanxi-OptiPlex-990:~/playground$ mv dir2/fun .
+nanxi@nanxi-OptiPlex-990:~/playground$ mv fun dir1
+nanxi@nanxi-OptiPlex-990:~/playground$ mv dir1 dir2
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l dir2
+total 4
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 08:52 dir1
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l dir2/dir1
+total 4
+-rw-r--r-- 1 nanxi nanxi 2404 Nov 18 15:09 fun
+nanxi@nanxi-OptiPlex-990:~/playground$ mv dir2/dir1 .
+nanxi@nanxi-OptiPlex-990:~/playground$ mv dir1/fun .
+nanxi@nanxi-OptiPlex-990:~/playground$ ln fun fun-hard
+nanxi@nanxi-OptiPlex-990:~/playground$ ln fun dir1/fun-hard
+nanxi@nanxi-OptiPlex-990:~/playground$ ln fun dir2/fun-hard
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 16
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 08:57 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 08:58 dir2
+-rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun
+-rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun-hard
+
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -li
+total 16
+14945554 drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 08:57 dir1
+14945555 drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 08:58 dir2
+14812875 -rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun
+14812875 -rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun-hard
+
+Creating links:
+nanxi@nanxi-OptiPlex-990:~/playground$ ln -s fun fun-sym
+nanxi@nanxi-OptiPlex-990:~/playground$ ln -s ../fun dir1/fun-sym
+nanxi@nanxi-OptiPlex-990:~/playground$ ln -s ../fun dir2/fun-sym
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l dir1
+total 4
+-rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun-hard
+lrwxrwxrwx 1 nanxi nanxi    6 Nov 20 09:02 fun-sym -> ../fun
+
+nanxi@nanxi-OptiPlex-990:~/playground$ ln -s dir1 dir1-sym
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 16
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir1
+lrwxrwxrwx 1 nanxi nanxi    4 Nov 20 09:06 dir1-sym -> dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir2
+-rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun
+-rw-r--r-- 4 nanxi nanxi 2404 Nov 18 15:09 fun-hard
+lrwxrwxrwx 1 nanxi nanxi    3 Nov 20 09:02 fun-sym -> fun
+
+
+nanxi@nanxi-OptiPlex-990:~/playground$ rm fun-hard
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 12
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir1
+lrwxrwxrwx 1 nanxi nanxi    4 Nov 20 09:06 dir1-sym -> dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir2
+-rw-r--r-- 3 nanxi nanxi 2404 Nov 18 15:09 fun
+lrwxrwxrwx 1 nanxi nanxi    3 Nov 20 09:02 fun-sym -> fun
+nanxi@nanxi-OptiPlex-990:~/playground$ less fun-sym 
+fun-sym: No such file or directory
+nanxi@nanxi-OptiPlex-990:~/playground$ rm fun-sym dir1-sym
+nanxi@nanxi-OptiPlex-990:~/playground$ ls -l
+total 8
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir1
+drwxr-xr-x 2 nanxi nanxi 4096 Nov 20 09:02 dir2
+nanxi@nanxi-OptiPlex-990:~/playground$ cd
+nanxi@nanxi-OptiPlex-990:~$ rm -r playground/
+
+
+
+3
+man – Display a Program's Manual Page
+i.e.
+man date: this will show the manual page of date as a user command
+we can also find a manual by session number, i.e.
+man 5 passwd
+
+apropos – Display Appropriate Commands
+i.e.
+apropos log: this will show all the commands that related to the keyword "log"
+
+whatis – Display One-line Manual Page Descriptions
+The whatis program displays the name and a one-line description of a man page match-
+ing a specified keyword:
+nanxi@nanxi-OptiPlex-990:~$ whatis ls
+ls (1)               - list directory contents
+
+info – Display a Program's Info Entry
+i.e:
+info who: this will show info for "who" in info files
+
+help – Get Help for Shell Builtins
+i.e:
+nanxi@nanxi-OptiPlex-990:~$ help help
+help: help [-dms] [pattern ...]
+    Display information about builtin commands.
+    
+    Displays brief summaries of builtin commands.  If PATTERN is
+    specified, gives detailed help on all commands matching PATTERN,
+    otherwise the list of help topics is printed.
+    
+    Options:
+      -d	output short description for each topic
+      -m	display usage in pseudo-manpage format
+      -s	output only a short usage synopsis for each topic matching
+    		PATTERN
+    
+    Arguments:
+      PATTERN	Pattern specifiying a help topic
+    
+    Exit Status:
+    Returns success unless PATTERN is not found or an invalid option is given.
+
+--help – Display Usage Information
+Many executable programs support a “--help” option that displays a description of the
+command's supported syntax and options.
+i.e.
+nanxi@nanxi-OptiPlex-990:~$ mkdir --help
+Usage: mkdir [OPTION]... DIRECTORY...
+Create the DIRECTORY(ies), if they do not already exist.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -m, --mode=MODE   set file mode (as in chmod), not a=rwx - umask
+  -p, --parents     no error if existing, make parent directories as needed
+  -v, --verbose     print a message for each created directory
+  -Z                   set SELinux security context of each created directory
+                         to the default type
+      --context[=CTX]  like -Z, or if CTX is specified then set the SELinux
+                         or SMACK security context to CTX
+      --help     display this help and exit
+      --version  output version information and exit
+
+GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
+Full documentation at: <http://www.gnu.org/software/coreutils/mkdir>
+or available locally via: info '(coreutils) mkdir invocation'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
